@@ -1,0 +1,10 @@
+.audience-container {
+    width: 500px;
+    height: 500px;
+}
+
+.audience-container button {
+    width: 7%;
+    height: 7%;
+    margin: 1%;
+}
