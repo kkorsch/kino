@@ -16,7 +16,7 @@
           <a href="home" class="pull-left btn btn-primary">Strona główna</a>
           <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
             <a href="<?php echo constant('URL'); ?>/Auth/logout" class="pull-right btn btn-sm btn-warning">Wyloguj</a>
-            <a href="<?php echo constant('URL'); ?>/Admin" class="pull-right btn btn-sm btn-warning">Admin panel</a>
+            <a href="<?php echo constant('URL'); ?>/AdminPanel" class="pull-right btn btn-sm btn-warning">Admin panel</a>
             <p class="text-center pull-right">Witaj <?php echo $_SESSION['admin']; ?>   .</p>
 
           <?php else: ?>

@@ -2,7 +2,7 @@
 
 use App\Models\Admin;
 
-class Auth extends Controller
+class AuthController extends Controller
 {
   public function index()
   {
