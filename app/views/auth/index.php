@@ -1,7 +1,7 @@
 <div class="row">
   <h1 class="text-center">Moje Kino</h1>
   <h4 class="text-center">Zaloguj się</h4>
-  <form class="col-md-offset-4 col-md-3" action="../app/loggingIn.php" method="post">
+  <form class="col-md-offset-4 col-md-3" action="Auth/login" method="post">
     <div class="form-group <?php if (isset($_SESSION['loginError'])) echo 'has-error'; ?>">
       <?php if (isset($_SESSION['loginError'])): ?>
         <span class="help-block"><?php echo $_SESSION['loginError']; ?></span>
