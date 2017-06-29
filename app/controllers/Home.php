@@ -19,8 +19,5 @@ class Home extends Controller
     $this->view('home/index', $filmy);
   }
 
-  public function strona()
-  {
-    $this->view('home/strona');
-  }
+  
 }
