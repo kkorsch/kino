@@ -11,4 +11,13 @@ class AdminPanelController extends Controller
     }
     return $this->view('admin/index');
   }
+
+  public function addFilm()
+  {
+    if (!Admin::isLoggedIn()) {
+      return header("Location: home");
+    }
+    return $this->view('admin/addFilm');
+  }
+
 }
