@@ -16,7 +16,7 @@
           <a href="home" class="pull-left btn btn-primary">Strona główna</a>
           <?php if (isset($_SESSION['loggedIn'])): ?>
             <a href="../app/logout.php" class="pull-right btn btn-sm btn-warning">Wyloguj</a>
-            <a href="admin.php" class="pull-right btn btn-sm btn-warning">Admin panel</a>
+            <a href="Admin" class="pull-right btn btn-sm btn-warning">Admin panel</a>
             <p class="text-center pull-right">Witaj <?php echo $_SESSION['admin']; ?>   .</p>
 
           <?php else: ?>
