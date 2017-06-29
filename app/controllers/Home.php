@@ -19,7 +19,7 @@ class Home extends Controller
     $this->view('home/index', $filmy);
   }
 
-  public function film(string $slug)
+  public function film(string $slug = '')
   {
     if (isset($slug) && !empty($slug)) {
       $today = date('Y-m-d');
@@ -34,7 +34,7 @@ class Home extends Controller
         ':nextWeek' => $nextWeek,
         ]) && $query->rowCount()) {
         $film = $query->fetchObject();
-        /*$days = [];
+        $days = [];
 
         //list of show days
         if ($today < $film->start) {
@@ -52,9 +52,15 @@ class Home extends Controller
         for ($i=0; $i<=$daysCount; $i++) {
           $day = date('Y-m-d, l', strtotime($start.'+'.$i.'days'));
           $days[$i] = $day;
-        }*/
+        }
+        $data['film'] = $film;
+        $data['days'] = $days;
+
+        return $this->view('home/film', $data);
       }
+      return header("Location: ".constant('URL'));
+
     }
-    $this->view('home/film', $film);
+    return header("Location: ".constant('URL'));
   }
 }
