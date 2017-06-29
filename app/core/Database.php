@@ -1,7 +1,5 @@
 <?php
 
-namespace App;
-
 class Database extends PDO
 {
   protected $dns = 'mysql:host=localhost;dbname=cinema';
