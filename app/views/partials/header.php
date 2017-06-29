@@ -15,12 +15,12 @@
 
           <a href="home" class="pull-left btn btn-primary">Strona główna</a>
           <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
-            <a href="#" class="pull-right btn btn-sm btn-warning">Wyloguj</a>
+            <a href="<?php echo constant('URL'); ?>/Auth/logout" class="pull-right btn btn-sm btn-warning">Wyloguj</a>
             <a href="Admin" class="pull-right btn btn-sm btn-warning">Admin panel</a>
             <p class="text-center pull-right">Witaj <?php echo $_SESSION['admin']; ?>   .</p>
 
           <?php else: ?>
-          <a class="pull-right btn btn-sm btn-warning" href="Auth">Log in</a>
+          <a class="pull-right btn btn-sm btn-warning" href="<?php echo constant('URL'); ?>/Auth">Log in</a>
         <?php endif; ?>
         </nav>
       </div>

@@ -44,4 +44,13 @@ class Auth extends Controller
     }
     return header("Location: ".constant('URL')."/Auth");
   }
+
+  public function logout()
+  {
+    $_SESSION['loggedIn'] = false;
+    unset($_SESSION['admin']);
+
+    $_SESSION['flash'] = "Wylogowałes się";
+    return header("Location: ".constant("URL"));
+  }
 }
