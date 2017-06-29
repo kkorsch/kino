@@ -5,4 +5,6 @@ require_once 'core/Database.php';
 
 require_once '../vendor/autoload.php';
 
+define("URL", "/kinov2/public");
+
 session_start();
