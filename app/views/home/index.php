@@ -1,7 +1,3 @@
-<?php
-include('../app/views/partials/header.php');
- ?>
-
       <div class="row">
         <h1 class="text-center">Moje Kino</h1>
         <h4 class="text-center">Repertuar</h4>
@@ -17,5 +13,3 @@ include('../app/views/partials/header.php');
         <h3 class="text-center">Brak filmów</h3>
       <?php endif; ?>
       </div>
-<?php
-  include('../app/views/partials/footer.php');

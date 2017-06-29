@@ -1,7 +1,3 @@
-<?php
-include('../app/views/partials/header.php');
- ?>
-
  <div class="row">
    <h1 class="text-center">Moje Kino</h1>
    <br>
@@ -29,6 +25,3 @@ include('../app/views/partials/header.php');
       <?php endif;
     endif; ?>
  </div>
-
-<?php
-include('../app/views/partials/footer.php');
