@@ -314,6 +314,48 @@ class AdminPanelController extends Controller
       return header("Location: ".constant("URL")."/AdminPanel/addAdmin");
   }
 
+  public function deletingAdmin()
+  {
+    $this->auth();
+
+    //validation
+      if (empty($_POST['username']) || empty($_POST['password']) ) {
+        $_SESSION['flash'] = "Żadne pole nie może pozostać puste!";
+      } else {
+        $user = $this->selectOne("SELECT password FROM users WHERE username=:admin", [':admin' => $_SESSION['admin']]);
+        if (!$user) {
+          $_SESSION['flash'] = "Bład krytyczny";
+          return header("Location: ".constant("URL"));
+        }
+        //preapare data
+        $password = $_POST['password'];
+        $correctPassword = $user->password;
+
+        //check if password matches
+        if (!password_verify($password, $correctPassword)) {
+          $_SESSION['flash'] = "Niepoprawne hasło";
+        } else {
+          $username = $_POST['username'];
+
+          //check if user we want to delete exists
+          $check = $this->selectOne("SELECT id FROM users WHERE username=:username", [':username' => $username]);
+
+          if (!$check) {
+            $_SESSION['flash'] = "Nie ma admina o tej nazwie!";
+          } else {
+            //deleting user
+            $delete = $this->delete("DELETE FROM users WHERE username=:username", [':username' => $username]);
+            if ($delete) {
+              $_SESSION['flash'] = "Usunięto admina!";
+              return header("Location: ".constant("URL")."/AdminPanel");
+            }
+            $_SESSION['flash'] = "Wystąpił bład, spróbuj ponownie.";
+          }
+        }
+      }
+      return header("Location: ".constant("URL")."/AdminPanel/deleteAdmin");
+  }
+
   private function auth()
   {
     if (!Admin::isLoggedIn()) {

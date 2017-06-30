@@ -10,6 +10,6 @@
       <label class="control-label">Podaj swoje hasło</label>
       <input type="password" name="password" class="form-control">
     </div>
-    <input type="submit" value="Dodaj" class="btn btn-primary">
+    <input type="submit" value="Usuń" class="btn btn-danger">
   </form>
 </div>
