@@ -23,12 +23,11 @@ class AuthController extends Controller
       $password = $_POST['password'];
 
       //check if such a user exists
-      $query = $db->prepare("SELECT password FROM users WHERE username=:username");
+      $user = $this->selectOne("SELECT password FROM users WHERE username=:username", [':username' => $username]);
 
-      if (!$query->execute([':username' => $username])) {
+      if (!$user) {
         $_SESSION['loginError'] = 'Nieprawidłowa nazwa użytkownika lub hasło';
       } else {
-        $user = $query->fetchObject();
         $passwordHashed = $user->password;
 
         //check if password matches

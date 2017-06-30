@@ -4,19 +4,16 @@ class HomeController extends Controller
 {
   public function index()
   {
-    $db = new Database;
+    //$db = new Database;
     $today = date('Y-m-d');
     $nextWeek = date('Y-m-d', strtotime($today.'+1week'));
-    $query = $db->prepare("SELECT title, slug FROM films WHERE finish>=:today and start<=:nextWeek ORDER BY start DESC");
 
-    if ($filmy = $query->execute([
+    $films = $this->selectMany("SELECT title, slug FROM films WHERE finish>=:today and start<=:nextWeek ORDER BY start DESC", [
       ':today' => $today,
       ':nextWeek' => $nextWeek,
-    ]) && $query->rowCount()) {
-      $filmy = $query->fetchAll();
-    }
+    ]);
 
-    $this->view('home/index', $filmy);
+    $this->view('home/index', $films);
   }
 
   public function film(string $slug = '')
@@ -24,16 +21,14 @@ class HomeController extends Controller
     if (isset($slug) && !empty($slug)) {
       $today = date('Y-m-d');
       $nextWeek = date('Y-m-d', strtotime($today.'+1week'));
-      $db = new Database;
 
       //check if film exists and select from database
-      $query = $db->prepare("SELECT * FROM films WHERE slug=:slug AND finish>=:today AND start<=:nextWeek");
-      if ($query->execute([
+      $film = $this->selectOne("SELECT * FROM films WHERE slug=:slug AND finish>=:today AND start<=:nextWeek", [
         ':slug' => $slug,
         ':today' => $today,
         ':nextWeek' => $nextWeek,
-        ]) && $query->rowCount()) {
-        $film = $query->fetchObject();
+        ]);
+      if ($film) {
         $days = [];
 
         //list of show days
