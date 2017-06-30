@@ -11,15 +11,12 @@
       <hr>
       <h4 class="text-center">Rezerwacja</h4>
         <?php if (!empty($data['days'])): ?>
-        <form class="col-md-offset-5 col-md-3" action="shows.php" method="get">
-          <input type="hidden" name="film" value="<?php echo $data['film']->id; ?>">
-          <div class="form-group">
-            <label class="control-label">Dni</label>
+          <div class="col-md-offset-5 col-md-2">
+            <label class="control-label">Dni</label><br>
             <?php foreach ($data['days'] as $day): ?>
-              <button type="radio" name="date" value="<?php echo date('Y-m-d', strtotime($day)); ?>"class="form-control btn btn-default"><?php echo $day; ?></button>
+              <a  href="<?php echo constant("URL"); ?>/Reservation/shows/<?php echo htmlspecialchars($data['film']->id).'/'.htmlspecialchars($day); ?>" class="btn btn-default"><?php echo $day; ?></a>
             <?php endforeach; ?>
           </div>
-        </form>
       <?php else: ?>
         <p class="text-center">Brak seansów</p>
       <?php endif;
