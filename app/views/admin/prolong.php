@@ -9,7 +9,7 @@
     <h3 class="text-center"><strong><?php echo htmlspecialchars($data->title); ?></strong></h3>
     <p class="text-center">Obecna data zakończenia wyświetlania filmu:</p>
     <p class="text-center"><strong><?php echo htmlspecialchars($data->finish); ?></strong></p>
-<form class="col-md-offset-4 col-md-4" action="../app/admin/prolongFilm.php?film=<?php echo htmlspecialchars($data->slug); ?>" method="post">
+<form class="col-md-offset-4 col-md-4" action="<?php echo constant("URL"); ?>/AdminPanel/prolonging/<?php echo htmlspecialchars($data->slug); ?>" method="post">
   <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
     <label class="control-label">Nowa data zakończenia seansów</label>
     <input type="date" name="newTo" class="form-control" value="<?php if (isset($_SESSION['newTo'])) echo htmlspecialchars($_SESSION['newTo']); ?>">

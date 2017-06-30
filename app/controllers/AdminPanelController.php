@@ -72,6 +72,64 @@ class AdminPanelController extends Controller
     return header("Location: ".constant("URL")."/AdminPanel/Films");
   }
 
+  public function prolonging(string $slug = '')
+  {
+    //validation
+    if (empty($slug) || empty($_POST['newTo']) || empty($_POST['check_list'])) {
+      $_SESSION['flash'] = "Żadne pole nie może pozostać puste!";
+    } else {
+      //prapare data
+      $newTo = $_POST['newTo'];
+      $shows = $_POST['check_list'];
+
+      //date validation
+      if ($newTo < $_SESSION['oldTo'] || $newTo == $_SESSION['oldTo'] || $newTo > date('Y-m-d', strtotime($_SESSION['oldTo'].'+1month')) ) {
+        $_SESSION['flash'] = "Nowa data musi być w ciągu miesiąca od obecnej daty zakończenia!";
+      } else {
+        //check if film exists
+        $check = $this->selectOne("SELECT id FROM films WHERE slug=:slug", [':slug' => $slug]);
+
+        if ($check) {
+          //update 'to' date in database
+          $save = $this->insert("UPDATE films SET finish=:newTo WHERE slug=:slug", [
+            ':slug' => $slug,
+            ':newTo' => $newTo,
+          ]);
+
+          if ($save) {
+            $days = (strtotime($newTo)-strtotime($_SESSION['oldTo']))/86400;
+
+            //adding shows to database
+            for ($i=1; $i<=$days; $i++) {
+              $day = date('Y-m-d', strtotime($_SESSION['oldTo'].'+'.$i.'days'));
+              foreach ($shows as $h) {
+                $this->insert("INSERT INTO shows(film_id, hour, show_date) VALUES (:id, :h, :day)", [
+                  ':id' => $check->id,
+                  ':h' => $h,
+                  ':day' => $day,
+                ]);
+              }
+            }
+
+            $_SESSION['flash'] = 'Data została zmieniona!';
+            }
+          } else {
+            $_SESSION['flash'] = 'Wystąpił bład podczas edytowania.';
+          }
+        return header("Location: ".constant("URL")."/AdminPanel/Films");
+      }
+    }
+    if (!empty($_POST['newTo'])) {
+      $_SESSION['newTo'] = $_POST['newTo'];
+    }
+    if (!empty($_POST['check_list'])) {
+      $_SESSION['check_list'] = $_POST['check_list'];
+    }
+
+    $film = htmlspecialchars($slug);
+    header("Location: ".constant("URL")."/AdminPanel/prolong/".$film);
+  }
+
   public function editing(string $slug)
   {
     //validation
