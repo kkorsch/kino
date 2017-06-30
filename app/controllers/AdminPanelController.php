@@ -32,6 +32,26 @@ class AdminPanelController extends Controller
     return $this->view('admin/films', $films);
   }
 
+  public function edit(string $slug = '')
+  {
+    if (!Admin::isLoggedIn()) {
+      return header("Location: ".constant("URL"));
+    }
+
+    if(isset($slug) && !empty($slug)) {
+      //select film from database
+      $film = $this->selectOne("SELECT title, slug, description FROM films WHERE slug=:slug", [':slug' => $slug]);
+      
+      if (!$film) {
+        $_SESSION['flash'] = "Wystąpił bład";
+        return header("Location: ".constant("URL")."/AdminPanel/Films");
+      } else {
+        return $this->view("admin/edit", $film);
+      }
+    }
+
+  }
+
   public function addingFilm()
   {
     $today = date('Y-m-d');

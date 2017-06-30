@@ -25,7 +25,7 @@
                 <?php else: ?>
                   <td><a href="prolongFilm.php?film=<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-warning">Przedłuż film</a></td>
                 <?php endif; ?>
-                  <td><a href="editFilm.php?film=<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-primary">Edytuj tytuł/opis</a></td>
+                  <td><a href="edit/<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-primary">Edytuj tytuł/opis</a></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
