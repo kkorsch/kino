@@ -7,7 +7,7 @@ class AuthController extends Controller
   public function index()
   {
     if (Admin::isLoggedIn()) {
-      return header("Location: home");
+      return $this->redirect();
     }
     return $this->view('auth/index');
   }
@@ -35,13 +35,13 @@ class AuthController extends Controller
           $_SESSION['loggedIn'] = true;
           $_SESSION['admin'] = $username;
           $_SESSION['flash'] = "Zalogowaleś się jako '{$username}'";
-          return header("Location: ". constant("URL"));
+          return $this->redirect();
         } else {
           $_SESSION['loginError'] = 'Nieprawidłowa nazwa użytkownika lub hasło';
         }
       }
     }
-    return header("Location: ".constant('URL')."/Auth");
+    return $this->redirect('Auth');
   }
 
   public function logout()
@@ -50,6 +50,6 @@ class AuthController extends Controller
     unset($_SESSION['admin']);
 
     $_SESSION['flash'] = "Wylogowałes się";
-    return header("Location: ".constant("URL"));
+    return $this->redirect();
   }
 }
