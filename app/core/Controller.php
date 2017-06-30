@@ -43,4 +43,9 @@
      }
      return $q;
    }
+
+   public function redirect(string $url = "Home")
+   {
+     header("Location: ".constant("URL")."/".$url);
+   }
  }
