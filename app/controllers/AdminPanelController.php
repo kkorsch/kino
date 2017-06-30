@@ -10,6 +10,12 @@ class AdminPanelController extends Controller
     return $this->view('admin/index');
   }
 
+  public function addAdmin()
+  {
+    $this->auth();
+    return $this->view('admin/addAdmin');
+  }
+
   public function addFilm()
   {
     $this->auth();
