@@ -6,25 +6,19 @@ class AdminPanelController extends Controller
 {
   public function index()
   {
-    if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
-    }
+    $this->auth();
     return $this->view('admin/index');
   }
 
   public function addFilm()
   {
-    if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
-    }
+    $this->auth();
     return $this->view('admin/addFilm');
   }
 
   public function Films()
   {
-    if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
-    }
+    $this->auth();
 
     //select films from database
     $films = $this->selectMany("SELECT title, start, finish, slug FROM films ORDER BY start DESC");
@@ -34,9 +28,7 @@ class AdminPanelController extends Controller
 
   public function prolong(string $slug = '')
   {
-    if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
-    }
+    $this->auth();
 
     if(isset($slug) && !empty($slug)) {
       //select film from database
@@ -55,9 +47,7 @@ class AdminPanelController extends Controller
 
   public function edit(string $slug = '')
   {
-    if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
-    }
+    $this->auth();
 
     if(isset($slug) && !empty($slug)) {
       //select film from database
@@ -74,6 +64,8 @@ class AdminPanelController extends Controller
 
   public function prolonging(string $slug = '')
   {
+    $this->auth();
+
     //validation
     if (empty($slug) || empty($_POST['newTo']) || empty($_POST['check_list'])) {
       $_SESSION['flash'] = "Żadne pole nie może pozostać puste!";
@@ -132,6 +124,8 @@ class AdminPanelController extends Controller
 
   public function editing(string $slug)
   {
+    $this->auth();
+
     //validation
     if (empty($_POST['title']) || empty($_POST['description'])) {
       $_SESSION['flash'] = "Żadne pole nie może pozostać puste!";
@@ -176,6 +170,8 @@ class AdminPanelController extends Controller
 
   public function addingFilm()
   {
+    $this->auth();
+
     $today = date('Y-m-d');
     $nextMonth = date('Y-m-d', strtotime($today.'+1month'));
 
@@ -253,7 +249,14 @@ class AdminPanelController extends Controller
     return header("Location: ".constant("URL"). "/AdminPanel/addFilm");
   }
 
-  function slugify($string, $replace = array(), $delimiter = '-') {
+  private function auth()
+  {
+    if (!Admin::isLoggedIn()) {
+      return header("Location: ".constant("URL"));
+    }
+  }
+
+  private function slugify($string, $replace = array(), $delimiter = '-') {
     // https://github.com/phalcon/incubator/blob/master/Library/Phalcon/Utils/Slug.php
     if (!extension_loaded('iconv')) {
       throw new Exception('iconv module not loaded');
