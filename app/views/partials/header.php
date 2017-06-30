@@ -13,7 +13,7 @@
         <?php endif; ?>
         <nav >
 
-          <a href="home" class="pull-left btn btn-primary">Strona główna</a>
+          <a href="<?php echo constant('URL'); ?>" class="pull-left btn btn-primary">Strona główna</a>
           <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
             <a href="<?php echo constant('URL'); ?>/Auth/logout" class="pull-right btn btn-sm btn-warning">Wyloguj</a>
             <a href="<?php echo constant('URL'); ?>/AdminPanel" class="pull-right btn btn-sm btn-warning">Admin panel</a>

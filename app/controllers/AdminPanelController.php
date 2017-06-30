@@ -7,7 +7,7 @@ class AdminPanelController extends Controller
   public function index()
   {
     if (!Admin::isLoggedIn()) {
-      return header("Location: home");
+      return header("Location: ".constant("URL"));
     }
     return $this->view('admin/index');
   }
@@ -15,7 +15,7 @@ class AdminPanelController extends Controller
   public function addFilm()
   {
     if (!Admin::isLoggedIn()) {
-      return header("Location: home");
+      return header("Location: ".constant("URL"));
     }
     return $this->view('admin/addFilm');
   }
