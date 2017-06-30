@@ -10,6 +10,11 @@
      include('../app/views/partials/footer.php');
    }
 
+   public function redirect(string $url = "Home")
+   {
+     header("Location: ".constant("URL")."/".$url);
+   }
+
    public function insert(string $query, $data = [])
    {
      return $this->execute($query, $data);
@@ -44,8 +49,4 @@
      return $q;
    }
 
-   public function redirect(string $url = "Home")
-   {
-     header("Location: ".constant("URL")."/".$url);
-   }
  }

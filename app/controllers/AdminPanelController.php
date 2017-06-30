@@ -53,7 +53,7 @@ class AdminPanelController extends Controller
     }
 
     $_SESSION['flash'] = "Wystąpił bład";
-    return header("Location: ".constant("URL")."/AdminPanel/Films");
+    return $this->redirect('AdminPanel/Films');
   }
 
 
@@ -71,7 +71,7 @@ class AdminPanelController extends Controller
     }
 
     $_SESSION['flash'] = "Wystąpił bład";
-    return header("Location: ".constant("URL")."/AdminPanel/Films");
+    return $this->redirect('AdminPanel/Films');
   }
 
   public function prolonging(string $slug = '')
@@ -120,7 +120,7 @@ class AdminPanelController extends Controller
           } else {
             $_SESSION['flash'] = 'Wystąpił bład podczas edytowania.';
           }
-        return header("Location: ".constant("URL")."/AdminPanel/Films");
+        return $this->redirect('AdminPanel/Films');
       }
     }
     if (!empty($_POST['newTo'])) {
@@ -131,7 +131,7 @@ class AdminPanelController extends Controller
     }
 
     $film = htmlspecialchars($slug);
-    return header("Location: ".constant("URL")."/AdminPanel/prolong/".$film);
+    return $this->redirect("AdminPanel/prolong/".$film);
   }
 
   public function editing(string $slug)
@@ -166,7 +166,7 @@ class AdminPanelController extends Controller
         } else {
           $_SESSION['flash'] = 'Wystąpił bład podczas edytowania.';
         }
-      return header("Location: ".constant("URL")."/AdminPanel/Films");
+      return $this->redirect('AdminPanel/Films');
     }
 
     if(!empty($_POST['title'])) {
@@ -177,7 +177,7 @@ class AdminPanelController extends Controller
     }
 
     $film = htmlspecialchars($slug);
-    return header("Location: ".constant("URL"). "/AdminPanel/edit/".$film);
+    return $this->redirect('AdminPanel/edit'.$film);
   }
 
   public function addingFilm()
@@ -216,7 +216,7 @@ class AdminPanelController extends Controller
 
       if ($check) {
         $_SESSION['flash'] = "Ten film został już dodany!";
-        return header("Location: ".constant("URL"). "/AdminPanel");
+        return $this->redirect('AdminPanel');
       }
 
       //adding film to database
@@ -247,7 +247,7 @@ class AdminPanelController extends Controller
         }
 
         $_SESSION['flash'] = 'Film został dodany!';
-        return header("Location: ".constant("URL") . "/AdminPanel");
+        return $this->redirect('AdminPanel');
       }
     }
     //save form data
@@ -257,7 +257,7 @@ class AdminPanelController extends Controller
       }
     }
 
-    return header("Location: ".constant("URL"). "/AdminPanel/addFilm");
+    return $this->redirect('AdminPanel/addFilm');
   }
 
   public function addingAdmin()
@@ -280,7 +280,7 @@ class AdminPanelController extends Controller
         $user = $this->selectOne("SELECT password FROM users WHERE username=:admin", [':admin' => $_SESSION['admin']]);
         if (!$user) {
           $_SESSION['flash'] = "Bład krytyczny";
-          return header("Location: ".constant("URL"));
+          return $this->redirect();
         }
 
         //check if password matches
@@ -305,13 +305,13 @@ class AdminPanelController extends Controller
             ]);
             if ($save) {
               $_SESSION['flash'] = "Dodano admina!";
-              return header("Location: ".constant("URL")."/AdminPanel");
+              return $this->redirect('AdminPanel');
             }
             $_SESSION['flash'] = "Wystąpił bład, spróbuj ponownie.";
           }
         }
       }
-      return header("Location: ".constant("URL")."/AdminPanel/addAdmin");
+      return $this->redirect('AdminPanel/addAdmin');
   }
 
   public function deletingAdmin()
@@ -325,7 +325,7 @@ class AdminPanelController extends Controller
         $user = $this->selectOne("SELECT password FROM users WHERE username=:admin", [':admin' => $_SESSION['admin']]);
         if (!$user) {
           $_SESSION['flash'] = "Bład krytyczny";
-          return header("Location: ".constant("URL"));
+          return $this->redirect();
         }
         //preapare data
         $password = $_POST['password'];
@@ -347,13 +347,13 @@ class AdminPanelController extends Controller
             $delete = $this->delete("DELETE FROM users WHERE username=:username", [':username' => $username]);
             if ($delete) {
               $_SESSION['flash'] = "Usunięto admina!";
-              return header("Location: ".constant("URL")."/AdminPanel");
+              return $this->redirect('AdminPanel');
             }
             $_SESSION['flash'] = "Wystąpił bład, spróbuj ponownie.";
           }
         }
       }
-      return header("Location: ".constant("URL")."/AdminPanel/deleteAdmin");
+      return $this->redirect('AdminPanel/deleteAdmin');
   }
 
   public function deleteReservations()
@@ -374,13 +374,13 @@ class AdminPanelController extends Controller
     }
 
     $_SESSION['flash'] = "Rezerwacje wyczyszczone.";
-    return header("Location: ".constant("URL")."/AdminPanel");
+    return $this->redirect('AdminPanel');
   }
 
   private function auth()
   {
     if (!Admin::isLoggedIn()) {
-      return header("Location: ".constant("URL"));
+      return $this->redirect();
     }
   }
 
