@@ -53,9 +53,9 @@ class HomeController extends Controller
 
         return $this->view('home/film', $data);
       }
-      return header("Location: ".constant('URL'));
+      return $this->redirect();
 
     }
-    return header("Location: ".constant('URL'));
+    return $this->redirect();
   }
 }
