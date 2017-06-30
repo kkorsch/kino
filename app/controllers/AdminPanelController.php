@@ -42,14 +42,13 @@ class AdminPanelController extends Controller
       //select film from database
       $film = $this->selectOne("SELECT title, slug, description FROM films WHERE slug=:slug", [':slug' => $slug]);
 
-      if (!$film) {
-        $_SESSION['flash'] = "Wystąpił bład";
-        return header("Location: ".constant("URL")."/AdminPanel/Films");
-      } else {
+      if ($film) {
         return $this->view("admin/edit", $film);
+
       }
     }
-
+    $_SESSION['flash'] = "Wystąpił bład";
+    return header("Location: ".constant("URL")."/AdminPanel/Films");
   }
 
   public function editing(string $slug)
