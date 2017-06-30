@@ -10,7 +10,7 @@
       <a href="AdminPanel/Films" class="list-group-item list-group-item-info">Edytuj filmy</a>
       <a href="AdminPanel/addAdmin" class="list-group-item list-group-item-danger">Dodaj admina</a>
       <a href="AdminPanel/deleteAdmin" class="list-group-item list-group-item-danger">Usuń admina</a>
-      <a href="../app/admin/deleteReservations.php" class="list-group-item list-group-item-success">Usuń stare rezerwacje</a>
+      <a href="AdminPanel/deleteReservations" class="list-group-item list-group-item-success">Usuń stare rezerwacje</a>
     </ul>
   </div>
 

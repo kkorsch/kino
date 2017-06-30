@@ -356,6 +356,27 @@ class AdminPanelController extends Controller
       return header("Location: ".constant("URL")."/AdminPanel/deleteAdmin");
   }
 
+  public function deleteReservations()
+  {
+    $this->auth();
+
+    $reservations = $this->selectMany("SELECT show_id FROM reservations");
+    $IDs = [];
+
+    foreach ($reservations as $r) {
+      $IDs[] = $r['0'];
+    }
+    $IDs = array_unique($IDs);
+
+    foreach ($IDs as $id) {
+      $x = $this->selectOne("SELECT id FROM shows WHERE id=:id", [':id' => $id]);
+      if (!$x) $this->delete("DELETE FROM reservations WHERE show_id=:id", [':id' => $id]);
+    }
+
+    $_SESSION['flash'] = "Rezerwacje wyczyszczone.";
+    return header("Location: ".constant("URL")."/AdminPanel");
+  }
+
   private function auth()
   {
     if (!Admin::isLoggedIn()) {
