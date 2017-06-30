@@ -127,7 +127,7 @@ class AdminPanelController extends Controller
     }
 
     $film = htmlspecialchars($slug);
-    header("Location: ".constant("URL")."/AdminPanel/prolong/".$film);
+    return header("Location: ".constant("URL")."/AdminPanel/prolong/".$film);
   }
 
   public function editing(string $slug)
