@@ -3,7 +3,7 @@
         <h4 class="text-center">Dodaj film</h4>
       </div>
       <div class="row">
-      <form class="col-md-offset-4 col-md-4" action="../app/admin/addingFilm.php" method="post">
+      <form class="col-md-offset-4 col-md-4" action="addingFilm" method="post">
         <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
           <label class="control-label">Tytuł:</label>
           <input type="text" name="title" class="form-control" value="<?php if (isset($_SESSION['title'])) echo htmlspecialchars($_SESSION['title']); ?>">
@@ -14,11 +14,11 @@
         </div>
         <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
           <label class="control-label">Data rozpoczęcia seansów</label>
-          <input type="date" name="since" class="form-control" value="<?php if (isset($_SESSION['since'])) echo $_SESSION['since']; ?>">
+          <input type="date" name="start" class="form-control" value="<?php if (isset($_SESSION['start'])) echo $_SESSION['start']; ?>">
         </div>
         <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
           <label class="control-label">Data zakończenia seansów</label>
-          <input type="date" name="to" class="form-control" value="<?php if (isset($_SESSION['to'])) echo $_SESSION['to']; ?>">
+          <input type="date" name="finish" class="form-control" value="<?php if (isset($_SESSION['finish'])) echo $_SESSION['finish']; ?>">
         </div>
         <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
           <label class="control-label">Godziny seansów:</label>
@@ -36,5 +36,5 @@
 unset($_SESSION['title']);
 unset($_SESSION['description']);
 unset($_SESSION['check_list']);
-unset($_SESSION['since']);
-unset($_SESSION['to']);
+unset($_SESSION['start']);
+unset($_SESSION['finish']);
