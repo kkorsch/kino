@@ -10,6 +10,12 @@ class AdminPanelController extends Controller
     return $this->view('admin/index');
   }
 
+  public function deleteAdmin()
+  {
+    $this->auth();
+    return $this->view('admin/deleteAdmin');
+  }
+
   public function addAdmin()
   {
     $this->auth();
