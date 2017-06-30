@@ -32,6 +32,27 @@ class AdminPanelController extends Controller
     return $this->view('admin/films', $films);
   }
 
+  public function prolong(string $slug = '')
+  {
+    if (!Admin::isLoggedIn()) {
+      return header("Location: ".constant("URL"));
+    }
+
+    if(isset($slug) && !empty($slug)) {
+      //select film from database
+      $film = $this->selectOne("SELECT title, finish, slug FROM films WHERE slug=:slug", [':slug' => $slug]);
+
+      if ($film) {
+        $_SESSION['oldTo'] = $film->finish;
+        return $this->view("admin/prolong", $film);
+      }
+    }
+
+    $_SESSION['flash'] = "Wystąpił bład";
+    return header("Location: ".constant("URL")."/AdminPanel/Films");
+  }
+
+
   public function edit(string $slug = '')
   {
     if (!Admin::isLoggedIn()) {
@@ -44,9 +65,9 @@ class AdminPanelController extends Controller
 
       if ($film) {
         return $this->view("admin/edit", $film);
-
       }
     }
+
     $_SESSION['flash'] = "Wystąpił bład";
     return header("Location: ".constant("URL")."/AdminPanel/Films");
   }
