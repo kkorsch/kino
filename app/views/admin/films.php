@@ -21,9 +21,9 @@
                   <td><?php echo htmlspecialchars($film['finish']); ?></td>
 
                   <?php if ($film['finish'] < date('Y-m-d')): ?>
-                  <td><a href="resumeFilm.php?film=<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-danger">Przywróć seanse</a></td>
+                  <td><a href="resume/<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-danger">Przywróć seanse</a></td>
                 <?php else: ?>
-                  <td><a href="prolongFilm.php?film=<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-warning">Przedłuż film</a></td>
+                  <td><a href="prolong/<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-warning">Przedłuż film</a></td>
                 <?php endif; ?>
                   <td><a href="edit/<?php echo htmlspecialchars($film['slug']); ?>" class="btn btn-primary">Edytuj tytuł/opis</a></td>
                 </tr>

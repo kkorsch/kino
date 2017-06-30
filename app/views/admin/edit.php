@@ -6,7 +6,7 @@
    <?php if (!$data): ?>
      <h2 class="text-center">Nie zanaleziono filmu</h2>
    <?php else: ?>
- <form class="col-md-offset-4 col-md-4" action="editingFilm/<?php echo htmlspecialchars($data->slug); ?>" method="post">
+ <form class="col-md-offset-4 col-md-4" action="<?php echo constant("URL"); ?>/AdminPanel/editing/<?php echo htmlspecialchars($data->slug); ?>" method="post">
    <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
      <label class="control-label">Tytuł:</label>
      <input type="text" name="title" class="form-control" value="<?php echo isset($_SESSION['title']) ?  htmlspecialchars($_SESSION['title']) :  htmlspecialchars($data->title); ?>">

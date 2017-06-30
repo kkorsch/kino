@@ -41,7 +41,7 @@ class AdminPanelController extends Controller
     if(isset($slug) && !empty($slug)) {
       //select film from database
       $film = $this->selectOne("SELECT title, slug, description FROM films WHERE slug=:slug", [':slug' => $slug]);
-      
+
       if (!$film) {
         $_SESSION['flash'] = "Wystąpił bład";
         return header("Location: ".constant("URL")."/AdminPanel/Films");
@@ -50,6 +50,50 @@ class AdminPanelController extends Controller
       }
     }
 
+  }
+
+  public function editing(string $slug)
+  {
+    //validation
+    if (empty($_POST['title']) || empty($_POST['description'])) {
+      $_SESSION['flash'] = "Żadne pole nie może pozostać puste!";
+    } elseif (strlen($_POST['title']) > 250) {
+      $_SESSION['flash'] = 'Tytuł może mieć maksymalnie 250 znaków!';
+    } else {
+
+      //prepare data
+      $title = $_POST['title'];
+      $description = $_POST['description'];
+
+      //check if film exists
+      $check = $this->selectOne("SELECT id FROM films WHERE slug=:slug", [':slug' => $slug]);
+
+      if ($check) {
+        //update film in database
+        $save = $this->insert("UPDATE films SET title=:title, description=:description WHERE slug=:slug", [
+          ':slug' => $slug,
+          ':title' => $title,
+          ':description' => $description,
+        ]);
+
+        if ($save) {
+          $_SESSION['flash'] = 'Film został zedytowany!';
+          }
+        } else {
+          $_SESSION['flash'] = 'Wystąpił bład podczas edytowania.';
+        }
+      return header("Location: ".constant("URL")."/AdminPanel/Films");
+    }
+
+    if(!empty($_POST['title'])) {
+      $_SESSION['title'] = $_POST['title'];
+    }
+    if (!empty($_POST['description'])) {
+      $_SESSION['description'] = $_POST['description'];
+    }
+
+    $film = htmlspecialchars($slug);
+    return header("Location: ".constant("URL"). "/AdminPanel/edit/".$film);
   }
 
   public function addingFilm()
