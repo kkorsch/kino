@@ -20,6 +20,18 @@ class AdminPanelController extends Controller
     return $this->view('admin/addFilm');
   }
 
+  public function Films()
+  {
+    if (!Admin::isLoggedIn()) {
+      return header("Location: ".constant("URL"));
+    }
+
+    //select films from database
+    $films = $this->selectMany("SELECT title, start, finish, slug FROM films ORDER BY start DESC");
+
+    return $this->view('admin/films', $films);
+  }
+
   public function addingFilm()
   {
     $today = date('Y-m-d');

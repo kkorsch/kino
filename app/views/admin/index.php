@@ -7,7 +7,7 @@
   <div class="col-md-offset-5 col-md-2">
     <ul class="list-group">
       <a href="AdminPanel/addFilm" class="list-group-item list-group-item-info">Dodaj film</a>
-      <a href="editFilms.php" class="list-group-item list-group-item-info">Edytuj filmy</a>
+      <a href="AdminPanel/Films" class="list-group-item list-group-item-info">Edytuj filmy</a>
       <a href="addAdmin.php" class="list-group-item list-group-item-danger">Dodaj admina</a>
       <a href="deleteAdmin.php" class="list-group-item list-group-item-danger">Usuń admina</a>
       <a href="../app/admin/deleteReservations.php" class="list-group-item list-group-item-success">Usuń stare rezerwacje</a>
