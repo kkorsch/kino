@@ -45,7 +45,7 @@ class HomeController extends Controller
         }
 
         for ($i=0; $i<=$daysCount; $i++) {
-          $day = date('Y-m-d, l', strtotime($start.'+'.$i.'days'));
+          $day = date('Y-m-d', strtotime($start.'+'.$i.'days'));
           $days[$i] = $day;
         }
         $data['film'] = $film;
