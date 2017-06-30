@@ -1,7 +1,7 @@
 <div class="row">
   <h1 class="text-center">Moje Kino</h1>
   <h4 class="text-center">Dodaj admina</h4>
-  <form class="col-md-offset-4 col-md-3" action="../app/admin/addingAdmin.php" method="post">
+  <form class="col-md-offset-4 col-md-3" action="<?php echo constant("URL"); ?>/AdminPanel/addingAdmin" method="post">
     <div class="form-group <?php if (isset($_SESSION['flash'])) echo 'has-error'; ?>">
       <label class="control-label">Nazwa nowego admina</label>
       <input type="text" name="username" class="form-control">
