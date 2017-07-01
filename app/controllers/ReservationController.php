@@ -95,4 +95,69 @@ class ReservationController extends Controller
     }
       return $this->redirect();
   }
+
+  public function booking()
+  {
+    //validation
+    if (empty($_SESSION['seats']) || empty($_POST['name'])) {
+      $_SESSION['flash'] = 'Żadne pole nie może pozostać puste!';
+    } elseif (count($_SESSION['seats']) > 6) {
+      $_SESSION['flash'] = 'Nieprawidłowa ilość miejsc.';
+    } else {
+      //prepare data
+      $id = $_POST['film'];
+      $date = $_POST['date'];
+      $h = $_POST['h'];
+      $name = $_POST['name'];
+      $seats = $_SESSION['seats'];
+
+      //delete session
+      unset($_SESSION['seats']);
+
+      if ($date > date('Y-m-d', strtotime(date('Y-m-d').'+1week')) || $date < date('Y-m-d')){
+        $_SESSION['flash'] = "Wystąpił bład.";
+        return $this->redirect();
+      }
+
+      //check if show exists
+      $show = $this->selectOne("SELECT id FROM shows WHERE film_id=:id AND show_date=:d AND hour=:h", [
+        ':id' => $id,
+        ':d' => $date,
+        ':h' => $h,
+      ]);
+
+      if ($show) {
+        //check if chosen seats are not already taken
+        $seatsCheck = [];
+
+        foreach ($seats as $m) {
+          $x = $this->selectOne("SELECT id FROM reservations WHERE seat=:m AND show_id=:id", [
+            ':m' => $m,
+            ':id' => $show->id,
+          ]);
+          if ($x) $seatsCheck[] = $x;
+        }
+
+        if (!empty($seatsCheck)) {
+          $_SESSION['flash'] = 'Miejsca te są zajęte!';
+          return $this->redirect("Reservation/hall/{$id}/{$date}/{$h}");
+        }
+
+        //seats reservating (adding to database)
+        foreach ($seats as $m) {
+          $this->insert("INSERT INTO reservations(show_id, seat, name) VALUES (:id, :m, :name)", [
+            ':id' => $show->id,
+            ':m' => $m,
+            ':name' => $name,
+          ]);
+        }
+
+        $data = "Rezerwacja na nazwisko '{$name}'!";
+        return $this->view('reservations/thanks', $data);
+      } else {
+        $_SESSION['flash'] = 'Wystąpił bład. Spróbuj ponownie.';
+      }
+    }
+    return $this->redirect();
+  }
 }
